@@ -41,7 +41,6 @@ setClickListener()
 const debounceAction = (l, e) => {
     if (!win)
     {
-        timer()
         clearTimeout(timeout)
         timeout = setTimeout(() => l.apply(), e)        
     }
@@ -72,13 +71,19 @@ var hide_mole = () => {
 var debounce = () => debounceAction(show_mole, 1e3)
 
 function timer() {
-    time += 1
-    document.querySelector('.time').textContent = `Elapsed time: ${time} seconds`
+    setInterval(() => {
+        if (!win)
+        {
+            time += 1
+            document.querySelector('.time').textContent = `Elapsed time: ${time} seconds`        
+        }
+    }, 1000)
 }
 
 function start_game() {
     start = true
     win = false
+    timer()
     document.querySelector('.start-button').setAttribute('disabled', 1)
     document.querySelector('.time').textContent = `Elapsed time: 0 seconds`
     document.querySelector('.clicks').textContent = `Clicks: 0`
